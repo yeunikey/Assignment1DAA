@@ -17,7 +17,10 @@ public final class MergeSort {
         int[] buffer = new int[arr.length];
         metrics.allocations.incrementAndGet();
 
+        long t0 = System.nanoTime();
         sortRecursive(arr, buffer, 0, arr.length, metrics, depth);
+        long elapsed = System.nanoTime() - t0;
+        metrics.timeNs.addAndGet(elapsed);
     }
 
     private static void sortRecursive(int[] arr, int[] buffer,
