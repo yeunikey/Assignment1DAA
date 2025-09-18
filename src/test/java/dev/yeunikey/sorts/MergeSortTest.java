@@ -1,0 +1,68 @@
+package dev.yeunikey.sorts;
+
+import dev.yeunikey.metrics.DepthTracker;
+import dev.yeunikey.metrics.Metrics;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.Random;
+
+public class MergeSortTest {
+
+    @Test
+    public void testSmallArray() {
+        int[] arr = {5, 2, 4, 1, 3};
+        int[] expected = {1, 2, 3, 4, 5};
+
+        Metrics m = new Metrics();
+        DepthTracker d = new DepthTracker();
+
+        long t0 = System.currentTimeMillis();
+        MergeSort.sort(arr, m, d);
+        long elapsed = System.currentTimeMillis() - t0;
+        m.timeNs.addAndGet(elapsed);
+
+        Assert.assertArrayEquals(expected, arr);
+        Assert.assertTrue(d.maxDepth() > 0);
+
+        System.out.printf("Comparisons=%d, Depth=%d, Allocations=%d, Time=%d ms.%n", m.comparisons.get(), d.maxDepth(), m.allocations.get(), m.timeNs.get());
+    }
+
+    @Test
+    public void testRandomLargeArray() {
+        Random rnd = new Random(42);
+        int[] arr = rnd.ints(10_000, -1000, 1000).toArray();
+        int[] expected = arr.clone();
+        Arrays.sort(expected);
+
+        Metrics m = new Metrics();
+        DepthTracker d = new DepthTracker();
+
+        long t0 = System.currentTimeMillis();
+        MergeSort.sort(arr, m, d);
+        long elapsed = System.currentTimeMillis() - t0;
+        m.timeNs.addAndGet(elapsed);
+
+        Assert.assertArrayEquals(expected, arr);
+        System.out.printf("Comparisons=%d, Depth=%d, Allocations=%d, Time=%d ms.%n", m.comparisons.get(), d.maxDepth(), m.allocations.get(), m.timeNs.get());
+    }
+
+    @Test
+    public void testAlreadySorted() {
+        int[] arr = {1, 2, 3, 4, 5};
+        int[] expected = arr.clone();
+
+        Metrics m = new Metrics();
+        DepthTracker d = new DepthTracker();
+
+        long t0 = System.currentTimeMillis();
+        MergeSort.sort(arr, m, d);
+        long elapsed = System.currentTimeMillis() - t0;
+        m.timeNs.addAndGet(elapsed);
+
+        Assert.assertArrayEquals(expected, arr);
+        System.out.printf("Comparisons=%d, Depth=%d, Allocations=%d, Time=%d ms.%n", m.comparisons.get(), d.maxDepth(), m.allocations.get(), m.timeNs.get());
+    }
+
+}
