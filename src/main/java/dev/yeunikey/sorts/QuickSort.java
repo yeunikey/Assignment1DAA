@@ -16,7 +16,6 @@ public final class QuickSort {
     public static void sort(int[] arr, Metrics metrics, DepthTracker depth) {
         depth.reset();
         metrics.comparisons.set(0);
-        metrics.allocations.set(0);
 
         long t0 = System.nanoTime();
         quicksort(arr, 0, arr.length, metrics, depth);
@@ -29,7 +28,7 @@ public final class QuickSort {
         while (hi - lo > 1) {
             int n = hi - lo;
             if (n <= CUTOFF) {
-                insertionSort(arr, lo, hi, metrics);
+                SortUtils.insertionSort(arr, lo, hi, metrics);
                 return;
             }
 
@@ -51,20 +50,6 @@ public final class QuickSort {
         int pivotIndex = lo + rnd.nextInt(hi - lo);
         SortUtils.swap(arr, pivotIndex, hi - 1);
         return SortUtils.partition(arr, lo, hi, metrics);
-    }
-
-    private static void insertionSort(int[] arr, int lo, int hi, Metrics metrics) {
-        for (int i = lo + 1; i < hi; i++) {
-            int key = arr[i];
-            int j = i - 1;
-            while (j >= lo) {
-                metrics.comparisons.incrementAndGet();
-                if (arr[j] <= key) break;
-                arr[j + 1] = arr[j];
-                j--;
-            }
-            arr[j + 1] = key;
-        }
     }
 
 }

@@ -45,4 +45,18 @@ public class SortUtils {
         }
     }
 
+    public static void insertionSort(int[] arr, int left, int right, Metrics metrics) {
+        for (int i = left + 1; i < right; i++) {
+            int key = arr[i];
+            int j = i - 1;
+            while (j >= left) {
+                metrics.comparisons.incrementAndGet();
+                if (arr[j] <= key) break;
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = key;
+        }
+    }
+
 }

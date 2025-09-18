@@ -23,7 +23,7 @@ public class MergeSortTest {
         Assert.assertArrayEquals(expected, arr);
         Assert.assertTrue(d.maxDepth() > 0);
 
-        System.out.printf("Merge Sort, Comparisons=%d, Depth=%d, Allocations=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.allocations.get(), m.timeNs.get());
+        System.out.printf("Merge Sort, Comparisons=%d, Depth=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.timeNs.get());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class MergeSortTest {
         MergeSort.sort(arr, m, d);
 
         Assert.assertArrayEquals(expected, arr);
-        System.out.printf("Merge Sort, Comparisons=%d, Depth=%d, Allocations=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.allocations.get(), m.timeNs.get());
+        System.out.printf("Merge Sort, Comparisons=%d, Depth=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.timeNs.get());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class MergeSortTest {
         MergeSort.sort(arr, m, d);
 
         Assert.assertArrayEquals(expected, arr);
-        System.out.printf("Merge Sort, Comparisons=%d, Depth=%d, Allocations=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.allocations.get(), m.timeNs.get());
+        System.out.printf("Merge Sort, Comparisons=%d, Depth=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.timeNs.get());
     }
 
 }

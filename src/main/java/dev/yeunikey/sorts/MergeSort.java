@@ -2,6 +2,7 @@ package dev.yeunikey.sorts;
 
 import dev.yeunikey.metrics.DepthTracker;
 import dev.yeunikey.metrics.Metrics;
+import dev.yeunikey.utils.SortUtils;
 
 public final class MergeSort {
 
@@ -12,10 +13,8 @@ public final class MergeSort {
     public static void sort(int[] arr, Metrics metrics, DepthTracker depth) {
         depth.reset();
         metrics.comparisons.set(0);
-        metrics.allocations.set(0);
 
         int[] buffer = new int[arr.length];
-        metrics.allocations.incrementAndGet();
 
         long t0 = System.nanoTime();
         sortRecursive(arr, buffer, 0, arr.length, metrics, depth);
@@ -30,7 +29,7 @@ public final class MergeSort {
 
         int n = right - left;
         if (n <= CUTOFF) {
-            insertionSort(arr, left, right, metrics);
+            SortUtils.insertionSort(arr, left, right, metrics);
             depth.exit();
             return;
         }
@@ -43,24 +42,11 @@ public final class MergeSort {
         depth.exit();
     }
 
-    private static void insertionSort(int[] arr, int left, int right, Metrics metrics) {
-        for (int i = left + 1; i < right; i++) {
-            int key = arr[i];
-            int j = i - 1;
-            while (j >= left) {
-                metrics.comparisons.incrementAndGet();
-                if (arr[j] <= key) break;
-                arr[j + 1] = arr[j];
-                j--;
-            }
-            arr[j + 1] = key;
-        }
-    }
-
     private static void merge(int[] arr, int[] buffer,
                               int left, int mid, int right,
                               Metrics metrics) {
         int i = left, j = mid, k = left;
+
         while (i < mid && j < right) {
             metrics.comparisons.incrementAndGet();
             if (arr[i] <= arr[j]) buffer[k++] = arr[i++];
