@@ -2,6 +2,7 @@ package dev.yeunikey.sorts;
 
 import dev.yeunikey.metrics.DepthTracker;
 import dev.yeunikey.metrics.Metrics;
+import dev.yeunikey.utils.SortUtils;
 
 import java.util.Random;
 
@@ -18,55 +19,42 @@ public final class QuickSort {
         metrics.allocations.set(0);
 
         long t0 = System.nanoTime();
-        quicksort(arr, 0, arr.length - 1, metrics, depth);
+        quicksort(arr, 0, arr.length, metrics, depth);
         long elapsed = System.nanoTime() - t0;
         metrics.timeNs.addAndGet(elapsed);
     }
 
     private static void quicksort(int[] arr, int lo, int hi,
                                   Metrics metrics, DepthTracker depth) {
-        while (lo < hi) {
-            int n = hi - lo + 1;
+        while (hi - lo > 1) {
+            int n = hi - lo;
             if (n <= CUTOFF) {
                 insertionSort(arr, lo, hi, metrics);
                 return;
             }
 
             depth.enter();
-            int p = partition(arr, lo, hi, metrics);
+            int p = randomizedPartition(arr, lo, hi, metrics);
 
-            if (p - lo < hi - p) {
-                quicksort(arr, lo, p - 1, metrics, depth);
+            if (p - lo < hi - (p + 1)) {
+                quicksort(arr, lo, p, metrics, depth);
                 lo = p + 1;
             } else {
                 quicksort(arr, p + 1, hi, metrics, depth);
-                hi = p - 1;
+                hi = p;
             }
             depth.exit();
         }
     }
 
-    private static int partition(int[] arr, int lo, int hi, Metrics metrics) {
-
-        int pivotIndex = lo + rnd.nextInt(hi - lo + 1);
-        swap(arr, pivotIndex, hi);
-
-        int pivot = arr[hi];
-        int i = lo;
-
-        for (int j = lo; j < hi; j++) {
-            metrics.comparisons.incrementAndGet();
-            if (arr[j] <= pivot) {
-                swap(arr, i, j);
-                i++;
-            }
-        }
-        swap(arr, i, hi);
-        return i;
+    private static int randomizedPartition(int[] arr, int lo, int hi, Metrics metrics) {
+        int pivotIndex = lo + rnd.nextInt(hi - lo);
+        SortUtils.swap(arr, pivotIndex, hi - 1);
+        return SortUtils.partition(arr, lo, hi, metrics);
     }
 
     private static void insertionSort(int[] arr, int lo, int hi, Metrics metrics) {
-        for (int i = lo + 1; i <= hi; i++) {
+        for (int i = lo + 1; i < hi; i++) {
             int key = arr[i];
             int j = i - 1;
             while (j >= lo) {
@@ -76,14 +64,6 @@ public final class QuickSort {
                 j--;
             }
             arr[j + 1] = key;
-        }
-    }
-
-    private static void swap(int[] arr, int i, int j) {
-        if (i != j) {
-            int tmp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = tmp;
         }
     }
 
