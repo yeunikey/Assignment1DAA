@@ -23,7 +23,7 @@ public class QuickSortTest {
         Assert.assertArrayEquals(expected, arr);
         Assert.assertTrue(d.maxDepth() <= 2 * (int)(Math.log(arr.length) / Math.log(2)) + 5);
 
-        System.out.printf("Quick Sort, Comparisons=%d, Depth=%d, Allocations=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.allocations.get(), m.timeNs.get());
+        System.out.printf("Quick Sort, Comparisons=%d, Depth=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.timeNs.get());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class QuickSortTest {
 
         Assert.assertArrayEquals(expected, arr);
 
-        System.out.printf("Quick Sort, Comparisons=%d, Depth=%d, Allocations=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.allocations.get(), m.timeNs.get());
+        System.out.printf("Quick Sort, Comparisons=%d, Depth=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.timeNs.get());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class QuickSortTest {
         QuickSort.sort(arr, m, d);
 
         Assert.assertArrayEquals(expected, arr);
-        System.out.printf("Quick Sort, Comparisons=%d, Depth=%d, Allocations=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.allocations.get(), m.timeNs.get());
+        System.out.printf("Quick Sort, Comparisons=%d, Depth=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.timeNs.get());
 
     }
 
