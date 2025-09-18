@@ -8,20 +8,20 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Random;
 
-public class MergeSortTest {
+public class QuickSortTest {
 
     @Test
     public void testSmallArray() {
         int[] arr = {5, 2, 4, 1, 3};
-        int[] expected = {1, 2, 3, 4, 5};
+        int[] expected = arr.clone();
+        Arrays.sort(expected);
 
         Metrics m = new Metrics();
         DepthTracker d = new DepthTracker();
-
-        MergeSort.sort(arr, m, d);
+        QuickSort.sort(arr, m, d);
 
         Assert.assertArrayEquals(expected, arr);
-        Assert.assertTrue(d.maxDepth() > 0);
+        Assert.assertTrue(d.maxDepth() <= 2 * (int)(Math.log(arr.length) / Math.log(2)) + 5);
 
         System.out.printf("Comparisons=%d, Depth=%d, Allocations=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.allocations.get(), m.timeNs.get());
     }
@@ -29,16 +29,16 @@ public class MergeSortTest {
     @Test
     public void testRandomLargeArray() {
         Random rnd = new Random(42);
-        int[] arr = rnd.ints(10_000, -1000, 1000).toArray();
+        int[] arr = rnd.ints(20_000, -1000, 1000).toArray();
         int[] expected = arr.clone();
         Arrays.sort(expected);
 
         Metrics m = new Metrics();
         DepthTracker d = new DepthTracker();
-
-        MergeSort.sort(arr, m, d);
+        QuickSort.sort(arr, m, d);
 
         Assert.assertArrayEquals(expected, arr);
+
         System.out.printf("Comparisons=%d, Depth=%d, Allocations=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.allocations.get(), m.timeNs.get());
     }
 
@@ -49,11 +49,11 @@ public class MergeSortTest {
 
         Metrics m = new Metrics();
         DepthTracker d = new DepthTracker();
-
-        MergeSort.sort(arr, m, d);
+        QuickSort.sort(arr, m, d);
 
         Assert.assertArrayEquals(expected, arr);
         System.out.printf("Comparisons=%d, Depth=%d, Allocations=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.allocations.get(), m.timeNs.get());
+
     }
 
 }
