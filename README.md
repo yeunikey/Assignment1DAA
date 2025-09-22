@@ -103,3 +103,11 @@ Algorithm to run. Supported values:
 ### --rnd <seed>
 Seed for the random number generator.  
 **Example:** `--rnd 42` → ensures reproducible arrays/points across runs.
+
+---
+
+# Benchmark
+
+```bash
+mvn exec:java -Dexec.mainClass=org.openjdk.jmh.Main "-Dexec.args=dev.yeunikey.bench.SelectVsSortBenchmark -bm avgt -wi 5 -i 3 -rf csv -rff results.csv"
+```
