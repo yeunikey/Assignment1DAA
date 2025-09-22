@@ -58,15 +58,48 @@ Each algorithm will include:
 
 ---
 
-## How to Run
+## Build & Testing
 ```bash
-# Run all tests
-mvn test
-
 # Run build
 mvn clean package
 
-# Run main program (after build)
-cd target
-java -jar assignment-1.0-SNAPSHOT.jar
+# Run all tests
+mvn test
 ```
+
+---
+
+## How to run
+
+```bash
+# Run main program (after build)
+java -jar assignment-1.0-SNAPSHOT.jar \
+    --size 10000 \
+    --trials 3 \
+    --output results.csv \
+    --algo quicksort \
+    --rnd 42
+```
+
+### --size <N>
+Number of elements to process (array size for sorting algorithms or number of points for ClosestPair).  
+**Example:** `--size 10000` → array of 10,000 elements or 10,000 points.
+
+### --trials <N>
+Number of times to run the algorithm for averaging metrics.  
+**Example:** `--trials 3` → each algorithm runs 3 times.
+
+### --output <filename>
+CSV file where results will be saved.  
+**Example:** `--output results.csv` → will create a CSV with columns: algorithm, time (ns), recursion depth, number of comparisons, trial number.
+
+### --algo <name|all>
+Algorithm to run. Supported values:
+- `quicksort`
+- `mergesort`
+- `deterministicselect`
+- `closestpair`
+
+### --rnd <seed>
+Seed for the random number generator.  
+**Example:** `--rnd 42` → ensures reproducible arrays/points across runs.

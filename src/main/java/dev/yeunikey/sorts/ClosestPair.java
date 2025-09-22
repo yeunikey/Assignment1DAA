@@ -1,14 +1,32 @@
 package dev.yeunikey.sorts;
 
+import dev.yeunikey.metrics.CSVWriter;
 import dev.yeunikey.metrics.DepthTracker;
 import dev.yeunikey.metrics.Metrics;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Random;
 
-public final class ClosestPair {
+public final class ClosestPair implements Sort {
 
-    private ClosestPair() {}
+    public ClosestPair() {}
+
+    @Override
+    public String name() { return "ClosestPair"; }
+
+    @Override
+    public void run(int size, int trial, CSVWriter csv, Random rnd) {
+        Point[] pts = new Point[size];
+        for (int i = 0; i < size; i++) {
+            pts[i] = new Point(rnd.nextInt(1_000_000), rnd.nextInt(1_000_000));
+        }
+        Metrics m = new Metrics();
+        DepthTracker d = new DepthTracker();
+        findClosest(pts, m, d);
+        csv.writeRow(name(), m.timeNs.get(), d.maxDepth(), m.comparisons.get(), trial);
+        System.out.printf("%s trial %d done%n", name(), trial);
+    }
 
     public static double findClosest(Point[] points, Metrics metrics, DepthTracker depth) {
         depth.reset();

@@ -1,14 +1,30 @@
 package dev.yeunikey.sorts;
 
+import dev.yeunikey.metrics.CSVWriter;
 import dev.yeunikey.metrics.DepthTracker;
 import dev.yeunikey.metrics.Metrics;
 import dev.yeunikey.utils.SortUtils;
 
-public final class MergeSort {
+import java.util.Random;
+
+public final class MergeSort implements Sort {
 
     private static final int CUTOFF = 16;
 
-    private MergeSort() {}
+    public MergeSort() {}
+
+    @Override
+    public String name() { return "MergeSort"; }
+
+    @Override
+    public void run(int size, int trial, CSVWriter csv, Random rnd) {
+        int[] arr = rnd.ints(size, -1_000_000, 1_000_000).toArray();
+        Metrics m = new Metrics();
+        DepthTracker d = new DepthTracker();
+        sort(arr, m, d);
+        csv.writeRow(name(), m.timeNs.get(), d.maxDepth(), m.comparisons.get(), trial);
+        System.out.printf("%s trial %d done%n", name(), trial);
+    }
 
     public static void sort(int[] arr, Metrics metrics, DepthTracker depth) {
         depth.reset();

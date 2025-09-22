@@ -1,14 +1,31 @@
 package dev.yeunikey.sorts;
 
+import dev.yeunikey.metrics.CSVWriter;
 import dev.yeunikey.metrics.DepthTracker;
 import dev.yeunikey.metrics.Metrics;
 import dev.yeunikey.utils.SortUtils;
 
-public final class DeterministicSelect {
+import java.util.Random;
+
+public final class DeterministicSelect implements Sort {
 
     private static final int CUTOFF = 16;
 
-    private DeterministicSelect() {}
+    public DeterministicSelect() {}
+
+    @Override
+    public String name() { return "DeterministicSelect"; }
+
+    @Override
+    public void run(int size, int trial, CSVWriter csv, Random rnd) {
+        int[] arr = rnd.ints(size, -1_000_000, 1_000_000).toArray();
+        int k = arr.length / 2;
+        Metrics m = new Metrics();
+        DepthTracker d = new DepthTracker();
+        select(arr, k, m, d);
+        csv.writeRow(name(), m.timeNs.get(), d.maxDepth(), m.comparisons.get(), trial);
+        System.out.printf("%s trial %d done%n", name(), trial);
+    }
 
     public static int select(int[] arr, int k, Metrics metrics, DepthTracker depth) {
         depth.reset();

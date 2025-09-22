@@ -21,11 +21,11 @@ public final class CSVWriter implements AutoCloseable {
     }
 
     private void setupHeaders() {
-        pw.println("Algorithm,n,Trial,TimeNs,Depth,Comparisons,Allocations");
+        pw.println("Algorithm,TimeNs,Depth,Comparisons,Trial");
     }
 
-    public void writeRow(String algo, int n, int trial, long timeNs, int depth, long comps, long allocs) {
-        pw.printf("%s,%d,%d,%d,%d,%d,%d\n", algo, n, trial, timeNs, depth, comps, allocs);
+    public void writeRow(String algo, long timeNs, int depth, long comps, int trial) {
+        pw.printf("%s,%d,%d,%d,%d\n", algo, timeNs, depth, comps, trial);
     }
 
     public void close(){ pw.close(); }
