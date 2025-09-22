@@ -26,7 +26,7 @@ public final class MergeSort implements Sort {
         System.out.printf("%s trial %d done%n", name(), trial);
     }
 
-    public static void sort(int[] arr, Metrics metrics, DepthTracker depth) {
+    public void sort(int[] arr, Metrics metrics, DepthTracker depth) {
         depth.reset();
         metrics.comparisons.set(0);
 
@@ -38,7 +38,7 @@ public final class MergeSort implements Sort {
         metrics.timeNs.addAndGet(elapsed);
     }
 
-    private static void sortRecursive(int[] arr, int[] buffer,
+    private void sortRecursive(int[] arr, int[] buffer,
                                       int left, int right,
                                       Metrics metrics, DepthTracker depth) {
         depth.enter();
@@ -58,7 +58,7 @@ public final class MergeSort implements Sort {
         depth.exit();
     }
 
-    private static void merge(int[] arr, int[] buffer,
+    private void merge(int[] arr, int[] buffer,
                               int left, int mid, int right,
                               Metrics metrics) {
         int i = left, j = mid, k = left;

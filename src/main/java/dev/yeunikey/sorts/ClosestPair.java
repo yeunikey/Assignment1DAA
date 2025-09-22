@@ -28,7 +28,7 @@ public final class ClosestPair implements Sort {
         System.out.printf("%s trial %d done%n", name(), trial);
     }
 
-    public static double findClosest(Point[] points, Metrics metrics, DepthTracker depth) {
+    public double findClosest(Point[] points, Metrics metrics, DepthTracker depth) {
         depth.reset();
         metrics.comparisons.set(0);
         metrics.timeNs.set(0);
@@ -44,7 +44,7 @@ public final class ClosestPair implements Sort {
         return result;
     }
 
-    private static double closestRecursive(Point[] pts, int left, int right,
+    private double closestRecursive(Point[] pts, int left, int right,
                                            Metrics metrics, DepthTracker depth) {
         depth.enter();
         try {
@@ -84,7 +84,7 @@ public final class ClosestPair implements Sort {
         }
     }
 
-    public static double bruteForce(Point[] pts, int left, int right, Metrics metrics) {
+    public double bruteForce(Point[] pts, int left, int right, Metrics metrics) {
         double d = Double.POSITIVE_INFINITY;
         for (int i = left; i < right; i++) {
             for (int j = i + 1; j < right; j++) {
@@ -95,7 +95,7 @@ public final class ClosestPair implements Sort {
         return d;
     }
 
-    private static double dist(Point a, Point b) {
+    private double dist(Point a, Point b) {
         double dx = (double) a.x - b.x;
         double dy = (double) a.y - b.y;
         return Math.hypot(dx, dy);

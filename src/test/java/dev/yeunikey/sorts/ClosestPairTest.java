@@ -20,9 +20,10 @@ public class ClosestPairTest {
 
         Metrics m = new Metrics();
         DepthTracker d = new DepthTracker();
+        ClosestPair cp = new ClosestPair();
 
-        double fast = ClosestPair.findClosest(pts, m, d);
-        double brute = ClosestPair.bruteForce(pts, 0, pts.length, new Metrics());
+        double fast = cp.findClosest(pts, m, d);
+        double brute = cp.bruteForce(pts, 0, pts.length, new Metrics());
 
         Assert.assertEquals(brute, fast, 1e-9);
         Assert.assertTrue(d.maxDepth() > 0);
@@ -42,9 +43,10 @@ public class ClosestPairTest {
 
             Metrics m = new Metrics();
             DepthTracker d = new DepthTracker();
+            ClosestPair cp = new ClosestPair();
 
-            double fast = ClosestPair.findClosest(pts, m, d);
-            double brute = ClosestPair.bruteForce(pts, 0, pts.length, new Metrics());
+            double fast = cp.findClosest(pts, m, d);
+            double brute = cp.bruteForce(pts, 0, pts.length, new Metrics());
 
             Assert.assertEquals("Mismatch at n=" + n, brute, fast, 1e-9);
 
@@ -65,7 +67,7 @@ public class ClosestPairTest {
         Metrics m = new Metrics();
         DepthTracker d = new DepthTracker();
 
-        double fast = ClosestPair.findClosest(pts, m, d);
+        double fast = new ClosestPair().findClosest(pts, m, d);
 
         Assert.assertTrue(fast >= 0); // sanity check
 

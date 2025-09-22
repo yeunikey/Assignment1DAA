@@ -27,7 +27,7 @@ public final class DeterministicSelect implements Sort {
         System.out.printf("%s trial %d done%n", name(), trial);
     }
 
-    public static int select(int[] arr, int k, Metrics metrics, DepthTracker depth) {
+    public int select(int[] arr, int k, Metrics metrics, DepthTracker depth) {
         depth.reset();
         metrics.comparisons.set(0);
 
@@ -39,7 +39,7 @@ public final class DeterministicSelect implements Sort {
         return result;
     }
 
-    private static int selectRecursive(int[] arr, int left, int right, int k,
+    private int selectRecursive(int[] arr, int left, int right, int k,
                                        Metrics metrics, DepthTracker depth) {
         depth.enter();
 
@@ -69,7 +69,7 @@ public final class DeterministicSelect implements Sort {
         return result;
     }
 
-    private static int partition(int[] arr, int left, int right, int pivotIndex, Metrics metrics) {
+    private int partition(int[] arr, int left, int right, int pivotIndex, Metrics metrics) {
         SortUtils.swap(arr, pivotIndex, right - 1);
         int pivot = arr[right - 1];
         int store = left;
@@ -83,7 +83,7 @@ public final class DeterministicSelect implements Sort {
         return store;
     }
 
-    private static int medianOfMedians(int[] arr, int left, int right,
+    private int medianOfMedians(int[] arr, int left, int right,
                                        Metrics metrics, DepthTracker depth) {
         int n = right - left;
         int numGroups = (n + 4) / 5;
@@ -100,7 +100,7 @@ public final class DeterministicSelect implements Sort {
         return selectIndex(arr, left, left + numGroups, mid, metrics, depth);
     }
 
-    private static int selectIndex(int[] arr, int left, int right, int k,
+    private int selectIndex(int[] arr, int left, int right, int k,
                                    Metrics metrics, DepthTracker depth) {
         int n = right - left;
         if (n <= CUTOFF) {

@@ -18,7 +18,7 @@ public class QuickSortTest {
 
         Metrics m = new Metrics();
         DepthTracker d = new DepthTracker();
-        QuickSort.sort(arr, m, d);
+        new QuickSort().sort(arr, m, d);
 
         Assert.assertArrayEquals(expected, arr);
         Assert.assertTrue(d.maxDepth() <= 2 * (int)(Math.log(arr.length) / Math.log(2)) + 5);
@@ -35,7 +35,7 @@ public class QuickSortTest {
 
         Metrics m = new Metrics();
         DepthTracker d = new DepthTracker();
-        QuickSort.sort(arr, m, d);
+        new QuickSort().sort(arr, m, d);
 
         Assert.assertArrayEquals(expected, arr);
 
@@ -49,7 +49,7 @@ public class QuickSortTest {
 
         Metrics m = new Metrics();
         DepthTracker d = new DepthTracker();
-        QuickSort.sort(arr, m, d);
+        new QuickSort().sort(arr, m, d);
 
         Assert.assertArrayEquals(expected, arr);
         System.out.printf("Quick Sort, Comparisons=%d, Depth=%d, Time=%d nanosec.%n", m.comparisons.get(), d.maxDepth(), m.timeNs.get());

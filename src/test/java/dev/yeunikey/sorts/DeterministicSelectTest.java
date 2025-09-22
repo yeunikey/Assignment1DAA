@@ -25,7 +25,7 @@ public class DeterministicSelectTest {
             Metrics m = new Metrics();
             DepthTracker d = new DepthTracker();
 
-            int result = DeterministicSelect.select(arr, k, m, d);
+            int result = new DeterministicSelect().select(arr, k, m, d);
 
             Arrays.sort(copy);
             assertEquals(copy[k], result);

@@ -29,7 +29,7 @@ public final class QuickSort implements Sort {
         System.out.printf("%s trial %d done%n", name(), trial);
     }
 
-    public static void sort(int[] arr, Metrics metrics, DepthTracker depth) {
+    public void sort(int[] arr, Metrics metrics, DepthTracker depth) {
         depth.reset();
         metrics.comparisons.set(0);
 
@@ -39,7 +39,7 @@ public final class QuickSort implements Sort {
         metrics.timeNs.addAndGet(elapsed);
     }
 
-    private static void quicksort(int[] arr, int lo, int hi,
+    private void quicksort(int[] arr, int lo, int hi,
                                   Metrics metrics, DepthTracker depth) {
         while (hi - lo > 1) {
             int n = hi - lo;
@@ -62,7 +62,7 @@ public final class QuickSort implements Sort {
         }
     }
 
-    private static int randomizedPartition(int[] arr, int lo, int hi, Metrics metrics) {
+    private int randomizedPartition(int[] arr, int lo, int hi, Metrics metrics) {
         int pivotIndex = lo + rnd.nextInt(hi - lo);
         SortUtils.swap(arr, pivotIndex, hi - 1);
         return SortUtils.partition(arr, lo, hi, metrics);
